@@ -13,12 +13,12 @@
     <BuildToPrgFile>True</BuildToPrgFile>
     <d64Name />
     <Comments />
-    <Author>Neal Smith</Author>
+    <Author />
     <Email />
     <AutoLaunchName>hello.prg</AutoLaunchName>
     <NoSingleFileBuild>False</NoSingleFileBuild>
     <CreatedWithVersion>CBM prg Studio 3.14.1 BETA 1</CreatedWithVersion>
-    <HasGitRepo>False</HasGitRepo>
+    <HasGitRepo>True</HasGitRepo>
     <GitIgnoreList />
     <Cartridge>
         <CrtBuildingCartridge>False</CrtBuildingCartridge>
@@ -40,12 +40,26 @@
         <PreBuildCommands />
         <PostBuildCommands />
     </BuildEvents>
-    <BuildList />
+    <BuildList>
+        <FileName>hello.asm</FileName>
+    </BuildList>
     <DetermineBuildOrder>0</DetermineBuildOrder>
     <PaddingByte>0</PaddingByte>
     <!--Screen designer settings-->
     <AssyBinaryFileLocation />
     <AssyExportList />
     <!--End of screen designer settings-->
-    <SourceFiles />
+    <SourceFiles>
+        <SourceFile>
+            <Name>hello.asm</Name>
+            <PrgName />
+            <FileType>2</FileType>
+            <IncludeInBuild>True</IncludeInBuild>
+            <Regions />
+            <Breakpoints />
+            <Bookmarks />
+            <Topmost>True</Topmost>
+            <FileOpen>True</FileOpen>
+        </SourceFile>
+    </SourceFiles>
 </Project>
