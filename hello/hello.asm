@@ -30,7 +30,6 @@ Main
         ldy #>StrToPrint        ; msB of addr of str to print to Y
         jsr PRINT_STRING_BASIC  ; call kernal routine to print the string
 
-
         rts                     ; program done, return
 
 

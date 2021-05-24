@@ -18,7 +18,7 @@
     <AutoLaunchName>hello.prg</AutoLaunchName>
     <NoSingleFileBuild>False</NoSingleFileBuild>
     <CreatedWithVersion>CBM prg Studio 3.14.1 BETA 1</CreatedWithVersion>
-    <HasGitRepo>True</HasGitRepo>
+    <HasGitRepo>False</HasGitRepo>
     <GitIgnoreList />
     <Cartridge>
         <CrtBuildingCartridge>False</CrtBuildingCartridge>
