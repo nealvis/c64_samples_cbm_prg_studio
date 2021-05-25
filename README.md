@@ -6,7 +6,8 @@ To setup a development environment to build and run these sampes follow the foll
 
 - Install CBM Prg Studio.  This is an IDE specifically for building C64 code (as well as other 8 bit 6502 based platforms)
   - Download the released version here: https://www.ajordison.co.uk/
-  - I used version: 3.14.1 BETA 1 which seems to do a better job calling the c64 emulator.  Download link: http://www.mediafire.com/file/rjn8mxb0m34zs84/file
+  - I used version: 3.14.1 BETA 1 which seems to do a better job calling the c64 emulator.  
+    Download link: http://www.mediafire.com/file/rjn8mxb0m34zs84/file
 - Install the VICE C64 emulator 
   - Download the latest version here: https://vice-emu.sourceforge.io/
   - I used version 3.5
