@@ -18,7 +18,7 @@ CLEAR_SCREEN_KERNAL = $E544     ; Kernal routine to clear screen
 PRINT_STRING_BASIC = $AB1E      ; Basic routine to print text
 
 StrToPrint
-        text "hello world!"     ; string to print
+        null "HELLO WORLD"     ; null terminated string to print
 
 *=$1000
         
@@ -33,13 +33,5 @@ Main
         rts                     ; program done, return
 
 
-
-;BORDER_COLOR_ADDR = $D020
-;BACKGROUND_COLOR_ADDR = $D021
-;CrazyBorder
-;CrazyBorderLoop
-;        inc BORDER_COLOR_ADDR
-;        ;inc BACKGROUND_COLOR_ADDR
-;        jmp CrazyBorderLoop
 
         
