@@ -18,44 +18,56 @@ CLEAR_SCREEN_KERNAL = $E544     ; Kernal routine to clear screen
 
 PRINT_STRING_BASIC = $AB1E      ; Basic routine to print text
 
+; inner loop index/counter
+inner_counter
+        byte 0
 
-counter
-        byte 0, 0
+; outer loop index/counter
+outer_counter
+        byte 0
 
-count2
-        byte 0, 0
 
 *=$1000
-BORDER_COLOR_ADDR = $D020
-BACKGROUND_COLOR_ADDR = $D021
-
-
+border_color_addr = $D020
+background_color_addr = $D021
 
       
 Main
         jsr CLEAR_SCREEN_KERNAL ; clear screeen leave cursor upper left
-        jsr PrintHello
+        ;jsr PrintHello
 
 
 CrazyBorder
 CrazyBorderLoop
-        inc BORDER_COLOR_ADDR
-        ;inc BACKGROUND_COLOR_ADDR
 
-        ;jsr PrintHello
+; Total iterations will be inner_max * outer_max
+_inner_max = $FF        ; number of iterations of inner loop
+_outer_max = $B0        ; number of iterations of outer loop
 
-        inc counter
-        lda #$FF
-        cmp counter
-        bne CrazyBorderLoop
+        ; go to next boarder and background color
+        inc border_color_addr      ; inc val at border color addr
+        inc background_color_addr  ; inc val at bkgrd color addr
 
+        ; inc inner counter and if hasn't reached max then 
+        ; back to top of loop
+        inc inner_counter          
+        lda #_inner_max
+        cmp inner_counter
+        bne CrazyBorderLoop 
+
+        ; inner loop finished, reset inner_counter
+        ; to zero to prepare for next time through
         lda #00
-        sta counter
+        sta inner_counter
        
-        inc count2
-        lda #$80
-        cmp count2
+        ; now inc and check outer loop counter
+        ; if we've completed all the outer loops then done
+        inc outer_counter
+        lda #_outer_max
+        cmp outer_counter
         beq Done
+
+        ; still more to do, back to top of inner loop
         jmp CrazyBorderLoop
 Done
         rts
