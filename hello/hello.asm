@@ -20,9 +20,9 @@
         BYTE $20, $28,  $34, $30, $39, $36, $29 ; ASCII for " (4096)"
         BYTE $00, $00, $00      ; end of basic program (addr $080E from above)
 
-
-CLEAR_SCREEN_KERNAL = $E544     ; Kernal routine to clear screen
-PRINT_STRING_BASIC = $AB1E      ; Basic routine to print text
+; Assembler constants.  Doesn't seem to be a way to declare as const
+CLEAR_SCREEN_KERNAL_ADDR = $E544     ; Kernal routine to clear screen
+PRINT_STRING_BASIC_ADDR = $AB1E      ; Basic routine to print text
 
 StrToPrint
         null "HELLO VIA BASIC"  ; null terminated string to print
@@ -33,11 +33,11 @@ StrToPoke
                                 ; via copy direct to screen memory
 
 
-SCREEN_START = $0400            ; The start of c64 screen memory
+SCREEN_START_ADDR = $0400            ; The start of c64 screen memory
 
 ; we'll write directly to screen starting at a somewhat random
 ; screen location 
-SCREEN_DIRECT_START = SCREEN_START + $0100; 
+SCREEN_DIRECT_START_ADDR = SCREEN_START_ADDR + $0100; 
 
 
 ; our assembly code will goto this address
@@ -46,23 +46,23 @@ SCREEN_DIRECT_START = SCREEN_START + $0100;
 Main
 
         ; clear screeen leave cursor upper left
-        jsr CLEAR_SCREEN_KERNAL 
+        jsr CLEAR_SCREEN_KERNAL_ADDR 
         
-        ; method 1 call basic routine since we cleared screen 
+        ; method 1: call basic routine since we cleared screen 
         ; above the string will start in upper left
-        lda #<StrToPrint        ; LSB of addr of string to print to A
-        ldy #>StrToPrint        ; MSB of addr of str to print to Y
-        jsr PRINT_STRING_BASIC  ; call kernal routine to print the string
+        lda #<StrToPrint             ; LSB of addr of string to print to A
+        ldy #>StrToPrint             ; MSB of addr of str to print to Y
+        jsr PRINT_STRING_BASIC_ADDR  ; call kernal routine to print the string
 
 
-        ; method 2 write direct to screen memory
-        ldx #0                  ; use x reg as loop index start at 0
+        ; method 2: write direct to screen memory
+        ldx #0                         ; use x reg as loop index start at 0
 DirectLoop
-        lda StrToPoke,x         ; put a byte from string into accum
-        beq Done                ; if the byte was 0 then we're done 
-        sta SCREEN_DIRECT_START,x ; Store the byte to screen
-        inx                     ; inc to next byte and next screen location 
-        jmp DirectLoop          ; Go back for next byte
+        lda StrToPoke,x                ; put a byte from string into accum
+        beq Done                       ; if the byte was 0 then we're done 
+        sta SCREEN_DIRECT_START_ADDR,x ; Store the byte to screen
+        inx                            ; inc to next byte and next screen loc 
+        jmp DirectLoop                 ; Go back for next byte
 Done
         
 
