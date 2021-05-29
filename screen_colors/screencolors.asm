@@ -13,10 +13,8 @@
         BYTE $20, $28,  $34, $30, $39, $36, $29 ; ASCII for " (4096)"
         BYTE $00, $00, $00      ; end of basic program (addr $080E from above)
 
-
-CLEAR_SCREEN_KERNAL = $E544     ; Kernal routine to clear screen
-
-PRINT_STRING_BASIC = $AB1E      ; Basic routine to print text
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; program variables here before the main program
 
 ; inner loop index/counter
 inner_counter
@@ -27,14 +25,16 @@ outer_counter
         byte 0
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Start of main program
 *=$1000
-border_color_addr = $D020
-background_color_addr = $D021
-
-      
 Main
-        jsr CLEAR_SCREEN_KERNAL ; clear screeen leave cursor upper left
-        ;jsr PrintHello
+
+CLEAR_SCREEN_KERNAL_ADDR = $E544     ; Kernal routine to clear screen
+BORDER_COLOR_ADDR = $D020
+BACKGROUND_COLOR_ADDR = $D021
+
+        jsr CLEAR_SCREEN_KERNAL_ADDR ; clear screeen leave cursor upper left
 
 
 CrazyBorder
@@ -45,8 +45,8 @@ _inner_max = $FF        ; number of iterations of inner loop
 _outer_max = $B0        ; number of iterations of outer loop
 
         ; go to next boarder and background color
-        inc border_color_addr      ; inc val at border color addr
-        inc background_color_addr  ; inc val at bkgrd color addr
+        inc BORDER_COLOR_ADDR      ; inc val at border color addr
+        inc BACKGROUND_COLOR_ADDR  ; inc val at bkgrd color addr
 
         ; inc inner counter and if hasn't reached max then 
         ; back to top of loop
@@ -72,18 +72,6 @@ _outer_max = $B0        ; number of iterations of outer loop
 Done
         rts
 
-
-
-
-HelloStr
-        null "PRINTING HELLO 2"    ; string to print
-
-
-PrintHello
-        lda #<HelloStr        ; lsB of addr of string to print to A
-        ldy #>HelloStr        ; msB of addr of str to print to Y
-        jsr PRINT_STRING_BASIC  ; call kernal routine to print the string
-        rts
 
 
 
