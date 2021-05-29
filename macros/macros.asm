@@ -2,7 +2,6 @@
 ; create and use macros
 
 
-
 *=$0801 ; location to put 1 line basic program so we can just
         ; type run to execute the assembled program.
         ; will just call assembled program at correct location
@@ -21,42 +20,48 @@
 
 
 ; address of the Kernal routine to clear the screen
-CLEAR_SCREEN_KERNAL = $E544
+; note: can't seem to put const inside macro
+CLEAR_SCREEN_KERNAL_ADDR = $E544
 
 ; macro with no parameters to clear screen and 
 ; leave cursor in upper left
 defm clear_screen_mac
-        jsr CLEAR_SCREEN_KERNAL
+        jsr CLEAR_SCREEN_KERNAL_ADDR
         endm
 
 
 
 ; Address of BASIC routine to print a string at 
 ; current cursor location
-PRINT_STRING_BASIC = $AB1E      
+; note, can't seem to put const inside the macro
+PRINT_STRING_BASIC_ADDR = $AB1E      
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; macro to print a null terminated string via basic routine at 
 ; current cursor
-; /1 is the address of the first char of string to print
+; /1 is the addr of the first char of null terminated string to print
 defm print_string_basic_mac
         lda #</1                ; LSB of addr of string to print to A
         ldy #>/1                ; MSB of addr of str to print to Y
-        jsr PRINT_STRING_BASIC  ; call kernal routine to print the string
+        jsr PRINT_STRING_BASIC_ADDR  ; call kernal routine to print str
         endm
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ; Some constants for screen 
+; note can't seem to put variables inside macro
 SCREEN_START = $0400            ; The start of c64 screen memory
 SCREEN_COLS = 40                ; chars across
 SCREEN_ROWS = 25                ; chars down
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; macro to print a string by writing directly to screen memory
 ; /1 is the screen location for first character of string
 ; /2 is the address of the first char of string to print
+; note: can't pass in x, y screen location and let assembler
+;       do the calculation because assembler variable will be 
+;       redefined.  instead have to calculate screen location 
+;       before calling macro and pass that in.
 defm print_string_direct_mac
         ldx #0          ; use x reg as loop index start at 0
 @DirectLoop
@@ -106,6 +111,7 @@ Main
 
         ; print a string starting at x=5, y=5 
         ; by writing to screen memory
+; note: need to calculate address and pass it in to avoid duplicate vars
 screen_addr1 = SCREEN_START + (5 * SCREEN_COLS) + 5
         print_string_direct_mac screen_addr1, StrHelloDirect
 
@@ -114,6 +120,7 @@ screen_addr1 = SCREEN_START + (5 * SCREEN_COLS) + 5
 
         ; print a string starting at to x=6, y=6 
         ; by writing to screen memory
+; note: need to calculate address and pass it in to avoid duplicate vars
 screen_addr2 = SCREEN_START + (6 * SCREEN_COLS) + 6
         print_string_direct_mac screen_addr2, StrGoodbyeDirect
 
