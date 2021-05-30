@@ -1,5 +1,5 @@
-# c64_samples
-This is a repository of Commodore 64 sample code.  Each directory usually contains a small example program demonstrating just one or a few concepts. Unless otherwise stated CBM Prg Studio is used within Windows to build a .prg or .d64 file from the source code.  The CBM Prg Studio project file will be included in each directory as appropriate.  These programs built with CBM Prg Studio can be executed/tested on the VICE C64 emulator running on Windows.
+# c64_samples_cbm_prg_studio
+This is a repository of Commodore 64 sample code.  Each directory usually contains a small example program demonstrating just one or a few concepts. CBM Prg Studio is used within Windows to build a .prg or .d64 file from the source code.  The CBM Prg Studio project file will be included in each directory as appropriate.  These programs built with CBM Prg Studio can be executed/tested on the VICE C64 emulator running on Windows.
 
 # Setup
 To setup a development environment to build and run these sampes follow the following steps
